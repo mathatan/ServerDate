@@ -1,0 +1,76 @@
+<html>
+<head>
+    <style type="text/css">
+        .row div {
+            float: left;
+            font-family: monospace;
+        }
+
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .label {
+            width: 400px;
+            text-align: right;
+        }
+
+        .value {
+            padding-left: 20px;
+        }
+    </style>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.14/require.min.js"></script>
+</head>
+<body>
+<div class="row">
+    <div class="label">Current time according to server:</div>
+    <div class="value" id="serverTime"></div>
+</div>
+<div class="row">
+    <div class="label">Current time according to client:</div>
+    <div class="value" id="clientTime"></div>
+</div>
+<div class="row">
+    <div class="label">Current unix timestamp by server:</div>
+    <div class="value" id="serverUnix"></div>
+</div>
+<div class="row">
+    <div class="label">Current unix timestamp by client:</div>
+    <div class="value" id="clientUnix"></div>
+</div>
+<div class="row">
+    <div class="label">Offset between server and client time:</div>
+    <div class="value" id="offset"></div>
+</div>
+<script>
+    (function () {
+        var serverTime = document.getElementById('serverTime');
+        var clientTime = document.getElementById('clientTime');
+        var serverUnix = document.getElementById('serverUnix');
+        var clientUnix = document.getElementById('clientUnix');
+        var offset = document.getElementById('offset');
+
+        require(['lib/ServerDate.js'], function (ServerDate) {
+
+            var update = function() {
+                serverTime.innerText = ServerDate();
+                serverUnix.innerText = ServerDate.now();
+                clientTime.innerText = (new Date()).toString();
+                clientUnix.innerText = (new Date()).getTime();
+                offset.innerText = ServerDate.getOffset().toString();
+            };
+
+            setInterval(update, 5);
+
+            // Synchronize with the server constantly, for demo effect
+            setInterval(ServerDate.synchronize, 10000);
+
+            // Expose ServerDate globally for testing
+            window.ServerDate = ServerDate;
+        });
+    })();
+</script>
+</body>
+</html>
