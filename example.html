@@ -65,7 +65,7 @@
             setInterval(update, 5);
 
             // Synchronize with the server constantly, for demo effect
-            setInterval(ServerDate.synchronize, 10000);
+            setInterval(ServerDate.setUpConnection, 10000);
 
             // Expose ServerDate globally for testing
             window.ServerDate = ServerDate;
