@@ -11,6 +11,15 @@
   <script type="text/javascript" src="lib/jasmine-2.0.0/jasmine-html.js"></script>
   <script type="text/javascript" src="lib/jasmine-2.0.0/boot.js"></script>
 
+  <script>
+    window.define = function(module, callback) {
+      window.ServerDate = callback({ serverDate: {
+        url: "http://"+ location.hostname +":"+location.port+"/api/get_time",
+        syncSamples: 1
+      }});
+    };
+  </script>
+
   <!-- include source files here... -->
   <script type="text/javascript" src="ServerDate.js"></script>
 

@@ -54,21 +54,12 @@ describe("ServerDate", function () {
       });
   });
 
-  describe("additional properties not found in Date", function () {
-    it("getPrecision returns a number", function () {
-      expect(typeof(ServerDate.getPrecision())).toBe('number');
-    });
-
-    it("amortizationRate default is 25 ms", function () {
-      expect(ServerDate.amortizationRate).toBe(25);
-    });
-
-    it("amortizationThreshold default is 2000 ms", function () {
-      expect(ServerDate.amortizationThreshold).toBe(2000);
-    });
-
-    it("synchronizationIntervalDelay default is 1 hour", function () {
-      expect(ServerDate.synchronizationIntervalDelay).toBe(60 * 60 * 1000);
+  describe("network behaviour", function () {
+    it("returns value, if there is no connection", function() {
+      for (var i = 0; i < 100; i++) {
+        expect(ServerDate.now()).not.toBe(undefined);
+      }
     });
   });
+
 });
